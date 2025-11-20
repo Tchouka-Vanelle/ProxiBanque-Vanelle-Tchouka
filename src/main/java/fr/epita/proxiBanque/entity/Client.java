@@ -32,4 +32,10 @@ public class Client {
     @JoinColumn(name = "conseiller_id")
     private Conseiller conseiller;
 
+    @Transient // ne sera pas persistant dans la base
+    public double getFortune() {
+        return comptes.stream()
+                .mapToDouble(Compte::getSolde)
+                .sum();
+    }
 }

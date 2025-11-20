@@ -1,9 +1,9 @@
 package fr.epita.proxiBanque;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.epita.proxiBanque.controller.ConseillerController;
+import fr.epita.proxiBanque.controller.GestionSoldeController;
 import fr.epita.proxiBanque.entity.Client;
-import fr.epita.proxiBanque.service.ConseillerService;
+import fr.epita.proxiBanque.service.GestionSoldeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,23 +16,23 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
         import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ConseillerController.class)
-public class ConseillerControllerTest {
+@WebMvcTest(GestionSoldeController.class)
+public class GestionSoldeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
-    private ConseillerService conseillerService;
+    private GestionSoldeService gestionSoldeService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     void testVirement() throws Exception {
-        doNothing().when(conseillerService).effectuerVirement(1L, 2L, 100.0);
+        doNothing().when(gestionSoldeService).effectuerVirement(1L, 2L, 100.0);
 
-        mockMvc.perform(post("/api/conseiller/virement")
+        mockMvc.perform(post("/api/gestionSolde/virement")
                         .param("source", "1")
                         .param("destination", "2")
                         .param("montant", "100.0"))
@@ -41,10 +41,10 @@ public class ConseillerControllerTest {
 
     @Test
     void testSimulationCreditConso() throws Exception {
-        when(conseillerService.simulerCreditConso(any(Client.class), any(Double.class), any(Integer.class), any(Double.class)))
+        when(gestionSoldeService.simulerCreditConso(any(Client.class), any(Double.class), any(Integer.class), any(Double.class)))
                 .thenReturn(1050.0);
 
-        mockMvc.perform(get("/api/conseiller/simulation/creditConso")
+        mockMvc.perform(get("/api/gestionSolde/simulation/creditConso")
                         .param("clientId", "1")
                         .param("montant", "1000")
                         .param("duree", "12")
@@ -55,10 +55,10 @@ public class ConseillerControllerTest {
 
     @Test
     void testSimulationCreditImmo() throws Exception {
-        when(conseillerService.simulerCreditImmo(any(Client.class), any(Double.class), any(Integer.class), any(Double.class)))
+        when(gestionSoldeService.simulerCreditImmo(any(Client.class), any(Double.class), any(Integer.class), any(Double.class)))
                 .thenReturn(1200.0);
 
-        mockMvc.perform(get("/api/conseiller/simulation/creditImmo")
+        mockMvc.perform(get("/api/gestionSolde/simulation/creditImmo")
                         .param("clientId", "1")
                         .param("montant", "1000")
                         .param("duree", "12")

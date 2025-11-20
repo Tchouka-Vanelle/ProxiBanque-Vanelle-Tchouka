@@ -2,25 +2,25 @@ package fr.epita.proxiBanque.controller;
 
 
 import fr.epita.proxiBanque.entity.Client;
-import fr.epita.proxiBanque.service.ConseillerService;
+import fr.epita.proxiBanque.service.GestionSoldeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/conseiller")
-public class ConseillerController {
+@RequestMapping("/api/gestionSolde")
+public class GestionSoldeController {
 
-    private final ConseillerService conseillerService;
+    private final GestionSoldeService gestionSoldeService;
 
-    public ConseillerController(ConseillerService conseillerService) {
-        this.conseillerService = conseillerService;
+    public GestionSoldeController(GestionSoldeService gestionSoldeService) {
+        this.gestionSoldeService = gestionSoldeService;
     }
 
     @PostMapping("/virement")
     public ResponseEntity<Void> virement(@RequestParam Long source,
                                          @RequestParam Long destination,
                                          @RequestParam double montant) {
-        conseillerService.effectuerVirement(source, destination, montant);
+        gestionSoldeService.effectuerVirement(source, destination, montant);
         return ResponseEntity.ok().build();
     }
 
@@ -31,7 +31,7 @@ public class ConseillerController {
                                                         @RequestParam double taux) {
         Client client = new Client();
         client.setId(clientId);
-        double mensualite = conseillerService.simulerCreditConso(client, montant, duree, taux);
+        double mensualite = gestionSoldeService.simulerCreditConso(client, montant, duree, taux);
         return ResponseEntity.ok(mensualite);
     }
 
@@ -43,7 +43,7 @@ public class ConseillerController {
                                                        @RequestParam double taux) {
         Client client = new Client();
         client.setId(clientId);
-        double mensualite = conseillerService.simulerCreditImmo(client, montant, duree, taux);
+        double mensualite = gestionSoldeService.simulerCreditImmo(client, montant, duree, taux);
         return ResponseEntity.ok(mensualite);
     }
 }

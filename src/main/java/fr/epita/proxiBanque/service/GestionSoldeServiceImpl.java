@@ -8,11 +8,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConseillerServiceImpl implements ConseillerService {
+public class GestionSoldeServiceImpl implements GestionSoldeService {
 
     private final CompteRepository compteRepository;
 
-    public ConseillerServiceImpl(CompteRepository compteRepository) {
+    public GestionSoldeServiceImpl(CompteRepository compteRepository) {
         this.compteRepository = compteRepository;
     }
 

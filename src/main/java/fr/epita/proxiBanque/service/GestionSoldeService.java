@@ -2,7 +2,7 @@ package fr.epita.proxiBanque.service;
 
 import fr.epita.proxiBanque.entity.Client;
 
-public interface ConseillerService {
+public interface GestionSoldeService {
 
     void effectuerVirement(Long idCompteSource, Long idCompteDestination, double montant);
 
