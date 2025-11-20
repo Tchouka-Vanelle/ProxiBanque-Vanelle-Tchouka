@@ -30,7 +30,6 @@ public class ClientControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // TEST CREATION CLIENT (POST)
     @Test
     void testCreerClient() throws Exception {
         Client client = new Client();
@@ -58,7 +57,6 @@ public class ClientControllerTest {
                 .andExpect(jsonPath("$.telephone").value("0123456789"));
     }
 
-    // TEST LIRE CLIENT (GET)
     @Test
     void testLireClient() throws Exception {
         Client client = new Client();
